@@ -11,42 +11,36 @@ import java.util.Scanner;
 
 import com.ds.Hashing.Node;
 
+/**
+ * @author jayeshkumar Implemented Ordered list where elements are in ascending
+ *         order.
+ * 
+ */
+public class OrderedList<T> {
 
-public class OrderedList<T>{
-	
 	Node head;
-	static Scanner r = new Scanner(System.in);
-	
+	int count = 0;
 
-	
-	private class Node<T extends Comparable<T>> {
+	class Node<T extends Comparable<T>> {
 		T data;
 		Node next;
-		
-		 Node(T data){
-			this.data=data;
-			next=null;
+
+		Node(T data) {
+			this.data = data;
+			next = null;
 		}
-		
+
 	}
-	
-	public <T extends Comparable<T>>int getSize() {
-		int count=0;
-		if(head==null) {
-			return 0;
-		}
-		else {
-			
-			Node<T> temp=head;
-			while(temp!=null) {
-				count++;
-				temp=temp.next;
-				
-			}
-		}
-		return count;
+
+	public OrderedList() {
+		this.head = null;
 	}
-	
+
+	/**
+	 * 
+	 * @param index=position in list whose data we need.
+	 * @return the value of node at position=index
+	 */
 	public <T extends Comparable<T>> T get(int index) {
 		Node<T> temp = head;
 		Node<T> prev = null;
@@ -58,203 +52,138 @@ public class OrderedList<T>{
 		return (T) prev.data;
 	}
 
-	
-	
-	
-	private <T extends Comparable<T>> void addNormal(T input) {
-		Node newNode = new Node(input);
-		
-		if(head==null)
-			head=newNode;
-		else {
-			Node temp;
-			temp=head;
-			while(temp.next!=null) {
-				temp=temp.next;
-			}
-			temp.next=newNode;
-		}
-
-		
-	}
-
-
-
-	public <T extends Comparable<T>>void add(T data) {
+	/**
+	 * 
+	 * @param data=value of new Node Adds the new node at correct position by
+	 *                   comparing with rest of the nodes
+	 */
+	public <T extends Comparable<T>> void add(T data) {
 		Node<T> newNode = new Node<T>(data);
-		if(head==null || head.data.compareTo(data)>0) {
-			newNode.next=head;
-			head=newNode;
-		}
-		else {
-			Node<T> temp=head;
-			while(temp.next!=null && temp.next.data.compareTo(data)<0) {
-				temp=temp.next;
-				
+		if (head == null || head.data.compareTo(data) > 0) {
+			newNode.next = head;
+			head = newNode;
+			count++;
+		} else {
+			Node<T> temp = head;
+			while (temp.next != null && temp.next.data.compareTo(data) < 0) {
+				temp = temp.next;
+
 			}
-			newNode.next=temp.next;
-			temp.next=newNode;
+			newNode.next = temp.next;
+			temp.next = newNode;
+			count++;
 		}
-		
 
 	}
-	
 
+	/**
+	 * 
+	 * @param input=value user want to seach in list
+	 * @return true if found else false
+	 */
+	public <T extends Comparable<T>> boolean search(T input) {
+		boolean flag = false;
+		Node temp;
+		temp = head;
+		while (temp != null) {
+			if (temp.data.equals(input)) {
 
-public <T extends Comparable<T>>void pop(T input) {
-	
-	
-	if(input.equals(head.data)) { //Removing the first element
-		head=head.next;
-		return;
-	}
-	Node temp=head.next;
-	Node q=head;
-	while(temp!=null) {
-		
-		
-		if(temp.data.equals(input)) {
-			//System.out.println(temp.data);
-			if(temp.next==null) {
-				temp=temp.next;
-				q.next=null;
+				flag = true;
+				// pop(input);
+
+				break;
+			} else {
+				temp = temp.next;
 			}
-			else {
-				q.next=temp.next;
-				
-				temp=temp.next;
-			}
+
 		}
-		else {
-			q=temp;
-			temp=temp.next;
+		return flag;
+
+	}
+
+	/**
+	 * Display the ordered list
+	 */
+	public <T extends Comparable<T>> void display() {
+		Node temp = head;
+		while (temp.next != null) {
+			System.out.print(temp.data + "-->");
+			temp = temp.next;
 		}
+		System.out.println(temp.data);
 	}
-	
-}
 
-public static <T extends Comparable<T>> T userInput() {
-	
-	
-	T key = (T)r.next();
+	/**
+	 * @return true if empty else false
+	 */
+	public boolean isEmpty() {
+		if (head == null)
+			return true;
+		return false;
+	}
 
-	return key;
+	/**
+	 * @return number of elements in the list.
+	 */
+	public int size() {
+		return count;
+	}
 
-	/*boolean adding=search(input);
-	if(adding) {
-	System.out.println("Adding "+input);
-		add(input);
-	}*/
-}
-
-
-public <T extends Comparable<T>>boolean search(T input) {
-	boolean flag=true;
-	Node temp;
-	temp=head;
-	while(temp!=null) {
-		if(temp.data.equals(input)) {
-			
-			flag=false;
-			pop(input);
-			
-			break;
+	/**
+	 * @return the last node of the list
+	 */
+	public Node pop() {
+		if (head == null) {
+			System.out.println("List is empty");
+			return null;
 		}
-		else {
-			temp=temp.next;
+		if (head.next == null) {
+			Node temp = head;
+			head = null;
+			return temp;
 		}
-		
-	}
-	return flag;
-	
-	
-}
-
-public <T extends Comparable<T>>void display() {
-	Node temp= head;
-	while(temp.next!=null) {
-		System.out.print(temp.data+"-->");
-		temp=temp.next;
-	}
-	System.out.println(temp.data);
-}
-
-
-
-
-
-
-public <T extends Comparable<T>> T[] bubbleSort(T[] a) {
-	
-	int len=a.length;
-	T temp;
-	
-	for(int i=0;i<len-1;i++) {
-		for(int j=0;j<len-1-i;j++) {
-			if(a[j].compareTo(a[j+1])>0) {
-				temp= a[j];
-				a[j]=a[j+1];
-				a[j+1]=temp;
-			}
+		Node temp = head;
+		Node prev = null;
+		while (temp.next != null) {
+			prev = temp;
+			temp = temp.next;
 		}
+		prev.next = null;
+		return temp;
 	}
-	for (T t : a) {
-		addNormal(t);
-		
+
+	/**
+	 * @param pos=position of a node whom we want to remove
+	 * @return the removed node at index=pos
+	 */
+	public Node pop(int pos) {
+		if (head == null) {
+			System.out.println("List is empty");
+			return null;
+		}
+		if (pos == 1) {
+			Node temp = head;
+			head = null;
+			return temp;
+		}
+		int index = 1;
+		Node temp = head;
+		Node prev = null;
+		while (index < pos) {
+			prev = temp;
+			temp = temp.next;
+			index++;
+		}
+		prev.next = temp.next;
+		return temp;
+
 	}
-	
-	System.out.println("Sorted array");
-	printArray(a);
-	
-	return a;
-}
 
-public static <T extends Comparable<T>> void printArray(T[] a) {
-	for (T t : a) {
-		System.out.print(t+" ");
-		
+	/**
+	 * @return the entire list.
+	 */
+	public Node getHead() {
+		return head;
 	}
-	System.out.println();
-}
-
-
-
-public void write() {
-	try {
-        
-
-        FileWriter fWriter = new FileWriter(
-            "/Users/jayeshkumar/eclipse-workspace/DataStructure/OutputFiles/OrderedList.txt");
-        
-        String text="";
-       
-        //fWriter.write(text);
-        
-        Node temp;
-        temp=head;
-        while(temp.next!=null) {
-        	text=text+temp.data+"----->";
-        	temp=temp.next;
-        }
-        text=text+temp.data;
-        fWriter.write(text);
-
-        
-       
-
-        fWriter.close();
-
-
-        System.out.println(
-            "File is created successfully with the content.");
-    }
-
-    // Catch block to handle if exception occurs
-    catch (IOException e) {
-        // Print the exception
-        System.out.print(e.getMessage());
-    }
-}
-
 
 }
