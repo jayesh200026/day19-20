@@ -2,70 +2,23 @@ package com.ds;
 
 import java.util.Arrays;
 
-class QueueLL<T> {
-	Node<T> front;
-	Node<T> rear;
-	int count = 0;
-
-	@SuppressWarnings("hiding")
-	class Node<T> {
-		T data;
-		Node<T> next;
-
-		Node(T data) {
-			this.data = data;
-			this.next = null;
-		}
-	}
-
-	/*
-	 * Queue constructor
-	 */
-	public QueueLL() {
-		this.front = null;
-		this.rear = null;
-	}
-
-	/*
-	 * Enqueue the item
-	 */
-	public void enqueue(T item) {
-		Node<T> temp = new Node<T>(item);
-		if (rear == null) {
-			front = temp;
-			rear = temp;
-			count++;
-			return;
-		}
-		rear.next = temp;
-		rear = temp;
-		count++;
-	}
-
-	/*
-	 * Display the Queue data
-	 */
-	public void display() {
-		Node<T> node = this.front;
-		while (node.next != null) {
-			System.out.println("Data :" + node.data);
-			node = node.next;
-		}
-		System.out.print("Data :" + node.data);
-	}
-}
-
+/**
+ * @author jayeshkumar Program prints all prime anagram between 0 to 1000 using
+ *         queue operations
+ */
 public class PrimeAnagramQueue {
 
+	/**
+	 * Adds the prime anagrams to queue and then displays the queue content
+	 */
 	public void queueanagram() {
 
-		QueueLL<String> q = new QueueLL<>();
+		Queue<String> q = new Queue<>();
 		String[] primeNumbers = prime(1000);
 
 		for (int i = 0; i < primeNumbers.length; i++) {
 			for (int j = i + 1; j < primeNumbers.length; j++) {
-				// String v1=String.valueOf(list.get(i));
-				// String v2=String.valueOf(list.get(j));
+
 				if (anagram(primeNumbers[i], primeNumbers[j])) {
 					q.enqueue(primeNumbers[i]);
 					q.enqueue(primeNumbers[j]);
@@ -76,6 +29,11 @@ public class PrimeAnagramQueue {
 
 	}
 
+	/**
+	 * @param range=maximum value till you wanna search prime numbers;here it is
+	 *                      1000 Pushes every prime number to stack.
+	 * @return a String array of all prime numbers
+	 */
 	public String[] prime(int range) {
 		int position = 0;
 		String[] array = new String[1000];
@@ -102,6 +60,11 @@ public class PrimeAnagramQueue {
 
 	}
 
+	/**
+	 * @param string1=prime number converted to string
+	 * @param string2=another prime number converted to string
+	 * @return true if string1 and string2 are anagram else false.
+	 */
 	public boolean anagram(String string1, String string2) {
 		if (string1.length() != string2.length()) {
 			return false;

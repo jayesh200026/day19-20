@@ -1,16 +1,14 @@
 package com.main;
 
-import com.ds.UnOrderedList;
+import com.ds.UnOrderedListDemo;
 
 public class UnOrderedListMain {
 
 	public static void main(String[] args) {
-		
-		UnOrderedList o = new UnOrderedList();
+
+		UnOrderedListDemo o = new UnOrderedListDemo();
 		o.readFile();
-		o.display();
 		o.getUserInput();
-		o.display();
 		o.writeFile();
 	}
 
