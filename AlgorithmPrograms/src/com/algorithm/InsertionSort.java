@@ -2,50 +2,63 @@ package com.algorithm;
 
 import java.util.Scanner;
 
+/**
+ * @author jayeshkumar Sorts the array in ascending order using insertion sort
+ *         algorithm.
+ */
 public class InsertionSort {
-	
-	static String arr[];
-	static int n;
-	static Scanner r = new Scanner(System.in);
-	
+
+	static String array[];
+	static int size;
+	static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Ask the user to enter the numbers.Stores them in array then calls the print
+	 * method before sorting.
+	 */
 	public static void readArray() {
 		System.out.println("Enter the number of elements in the array");
-		n=r.nextInt();
-		arr=new String[n];
+		size = scanner.nextInt();
+		array = new String[size];
 		System.out.println("Enter the  elements of array");
-		for(int i=0;i<n;i++) {
-			arr[i]=r.next();
+		for (int i = 0; i < size; i++) {
+			array[i] = scanner.next();
 		}
-		
+		scanner.close();
 		System.out.println("Before Sorting");
 		print();
 	}
-	
+
+	/**
+	 * Sorts the array in ascending order.After sorting calls print method to print
+	 * the array elements.
+	 */
 	public static void insertionSort() {
-		
-		for(int i=1;i<n;i++) {
-			String item=arr[i];
-			int j=i-1;
-			
-			while(j>=0 && arr[j].compareTo(item)>0) {
-				arr[j+1]=arr[j];
-				j=j-1;
+
+		for (int i = 1; i < size; i++) {
+			String item = array[i];
+			int j = i - 1;
+
+			while (j >= 0 && array[j].compareTo(item) > 0) {
+				array[j + 1] = array[j];
+				j = j - 1;
 			}
-			arr[j+1]=item;
+			array[j + 1] = item;
 		}
 		System.out.println("After Sorting");
 		print();
 	}
 
+	/**
+	 * Prints the array elements
+	 */
 	private static void print() {
-		for (String string : arr) {
-			System.out.print(string+" ");
-			
+		for (String string : array) {
+			System.out.print(string + " ");
+
 		}
 		System.out.println();
-		
-		
+
 	}
-	
 
 }

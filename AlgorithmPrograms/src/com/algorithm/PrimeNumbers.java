@@ -1,5 +1,9 @@
 package com.algorithm;
 
+/**
+ * @author jayeshkumar
+ *This program prints all the prime numbers in specified range: Range in this case is 0 to 1000
+ */
 public class PrimeNumbers {
 	
 	public static void primeNumber() {
