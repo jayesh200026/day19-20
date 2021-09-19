@@ -2,109 +2,172 @@ package com.algorithm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class Generics {
-	static Scanner r = new Scanner(System.in);
-	
-	public static <T extends Comparable<T>> T[] bubbleSort(T[] a) {
-		
-		int len=a.length;
+/**
+ * @author jayeshkumar Implements binary search,bubble sort,insertion sort using
+ *         generics
+ */
+public class Generics<T> {
+	static Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * 
+	 * @param array array of elements of type T
+	 * @return sorted array Implements Bubble sort using generics.
+	 */
+	public static <T extends Comparable<T>> T[] bubbleSort(T[] array) {
+
+		int length = array.length;
 		T temp;
-		
-		for(int i=0;i<len-1;i++) {
-			for(int j=0;j<len-1-i;j++) {
-				if(a[j].compareTo(a[j+1])>0) {
-					temp= a[j];
-					a[j]=a[j+1];
-					a[j+1]=temp;
+
+		for (int i = 0; i < length - 1; i++) {
+			for (int j = 0; j < length - 1 - i; j++) {
+				if (array[j].compareTo(array[j + 1]) > 0) {
+					temp = array[j];
+					array[j] = array[j + 1];
+					array[j + 1] = temp;
 				}
 			}
 		}
-		System.out.println("Sorted array");
-		printArray(a);
-		return a;
-		
+		System.out.println("Sorted array using Bubble sort");
+		printArray(array);
+		return array;
+
 	}
-	public static <T extends Comparable<T>> T[] insertionSort(T[] a) {
+
+	/**
+	 * @param array array of elements of type T
+	 * @return sorted array Implements Insertion sort using generics.
+	 */
+	public static <T extends Comparable<T>> T[] insertionSort(T[] array) {
 		T item;
-		for(int i=1;i<a.length;i++) {
-			item=a[i];
-			int j=i-1;
-			while(j>=0 && a[j].compareTo(item)>0) {
-				a[j+1]=a[j];
-				j=j-1;
+		for (int i = 1; i < array.length; i++) {
+			item = array[i];
+			int j = i - 1;
+			while (j >= 0 && array[j].compareTo(item) > 0) {
+				array[j + 1] = array[j];
+				j = j - 1;
 			}
-			a[j+1]=item;
+			array[j + 1] = item;
 		}
-		System.out.println("Sorted array");
-		printArray(a);
-		return a;
+		System.out.println("Sorted array using insertion sort");
+		printArray(array);
+		return array;
 	}
-	
-	public static <T extends Comparable<T>> void binarySearch(T[] b,T key) {
-		
-		System.out.println("Input for binary search is");
-		printArray(b);
-	
-		T[] a=bubbleSort(b);
-		int l=0,r=a.length-1;
-		while(l<=r) {
-			int mid=(l+r)/2;
-			if(a[mid].compareTo(key)==0) {
-				System.out.println(key+" found at position "+(mid+1));
+
+	/**
+	 * 
+	 * @param array unsorted array
+	 * @param key   user value that he wants to search in array. First sort the
+	 *              array then searches the key in it.
+	 */
+	public static <T extends Comparable<T>> void binarySearch(T[] array, T key) {
+
+		T[] sortedArray = bubbleSort(array);
+		int left = 0, right = sortedArray.length - 1;
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			if (sortedArray[mid].compareTo(key) == 0) {
+				System.out.println(key + " found at position " + (mid + 1));
 				return;
 			}
-			if(a[mid].compareTo(key)>0)
-				r=mid-1;
+			if (sortedArray[mid].compareTo(key) > 0)
+				right = mid - 1;
 			else
-				l=mid+1;
+				left = mid + 1;
 		}
 		System.out.println("Not found");
 	}
-	
-	private static <T> T[] getInput() {
-		Scanner x;
-		try {
-			x = new Scanner(
-					new File("/Users/jayeshkumar/eclipse-workspace/AlgorithmPrograms/InputFiles/BinarySearch.txt"));
 
-			String whole = "";
-			while (x.hasNext()) {
-				whole = whole + x.next()+" ";
-			}
-			T[] array = (T[]) whole.split(" ");
-			x.close();
+	/**
+	 * 
+	 * @param a=array      to be sorted
+	 * @param from=stating index of array
+	 * @param to=ending    index of array
+	 * @return array after sorting
+	 */
+	public static <T extends Comparable<T>> T[] mergeSort(T[] array, int from, int to) {
+		if (from == to) {
 			return array;
-
-			
-
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
 		}
-		return null;
-		
+		int mid = (from + to) / 2;
+
+		mergeSort(array, from, mid);
+		mergeSort(array, mid + 1, to);
+		merge(array, from, mid, to);
+		return array;
 	}
-	public static <T> void printArray(T[] a) {
-		for (T t : a) {
-			System.out.print(t+" ");
-			
+
+	/**
+	 * 
+	 * @param a=array      to be sorted
+	 * @param from=stating index of array
+	 * @param mid=middle   index of the array
+	 * @param to=ending    index of array
+	 */
+	public static <T extends Comparable<T>> void merge(T[] array, int from, int mid, int to) {
+		int n = to - from + 1;
+		List<T> b = new ArrayList<>();
+		int p = from;
+		int q = mid + 1;
+		int j = 0;
+
+		while (p <= mid && q <= to) {
+			if (array[p].compareTo(array[q]) < 0) {
+				b.add(array[p]);
+				p++;
+			} else {
+				b.add(array[q]);
+				q++;
+			}
+			j++;
+		}
+
+		while (p <= mid) {
+			b.add(array[p]);
+			p++;
+			j++;
+		}
+
+		while (q <= to) {
+			b.add(array[q]);
+			q++;
+			j++;
+		}
+
+		for (j = 0; j < n; j++) {
+			array[from + j] = b.get(j);
+		}
+	}
+
+	/**
+	 * 
+	 * @param array elements that needed to be printed
+	 */
+	public static <T> void printArray(T[] array) {
+		for (T element : array) {
+			System.out.print(element + " ");
+
 		}
 		System.out.println();
 	}
-	
-	private static<T> T getKey() {
+
+	/**
+	 * Asks user to enter a key to search in a array
+	 * 
+	 * @return the user key
+	 */
+	public <T> T getKey() {
+		Scanner r = new Scanner(System.in);
 
 		System.out.println("Enter the key to search");
-		T key = (T)r.next();
+		T key = (T) r.next();
 
 		return key;
 
 	}
-	
-	
-	
-	
 
 }

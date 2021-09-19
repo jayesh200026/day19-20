@@ -3,55 +3,63 @@ package com.algorithm;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/**
+ * @author jayeshkumar This program ask user to enter 2 strings and checks if
+ *         they are anagram or not.
+ */
 public class Anagram {
 
-	static String str1, str2;
-	static Scanner r = new Scanner(System.in);
+	static String string1, string2;
+	static Scanner scanner = new Scanner(System.in);
 
 	public static void anagram() {
 		System.out.println("Enter the first string");
-		str1 = r.next();
+		string1 = scanner.next();
 		System.out.println("Enter the second string");
-		str2 = r.next();
+		string2 = scanner.next();
 
-		str1 = str1.toLowerCase();
-		str2 = str2.toLowerCase();
-		r.close();
+		string1 = string1.toLowerCase();
+		string2 = string2.toLowerCase();
+		scanner.close();
 
-		int len1 = str1.length();
-		int len2 = str2.length();
+		int length1 = string1.length();
+		int length2 = string2.length();
 
-		if (len1 != len2) {
-			System.out.println("Not a anagram");
+		if (length1 != length2) {
+			System.out.println("Strings are not a anagram");
 		} else {
-			char arr1[] = str1.toCharArray();
-			char arr2[] = str2.toCharArray();
+			char array1[] = string1.toCharArray();
+			char array2[] = string2.toCharArray();
 
-			arr1 = sort(arr1);
-			arr2 = sort(arr2);
+			array1 = sort(array1);
+			array2 = sort(array2);
 
-			if (Arrays.equals(arr1, arr2)) {
-				System.out.println("Anagram");
+			if (Arrays.equals(array1, array2)) {
+				System.out.println("Strings are Anagram");
 			} else {
-				System.out.println("Not a anagram");
+				System.out.println("Strings are not a anagram");
 			}
 		}
 	}
 
-	private static char[] sort(char[] arr) {
+	/**
+	 * @param array is character array
+	 * @return sorted character array Used bubble sort technique to sort
+	 */
+	private static char[] sort(char[] array) {
 
 		char temp;
 
-		for (int i = 0; i < arr.length - 1; i++) {
-			for (int j = 0; j < arr.length - i - 1; j++) {
-				if (arr[j] > arr[j + 1]) {
-					temp = arr[j];
-					arr[j] = arr[j + 1];
-					arr[j + 1] = temp;
+		for (int i = 0; i < array.length - 1; i++) {
+			for (int j = 0; j < array.length - i - 1; j++) {
+				if (array[j] > array[j + 1]) {
+					temp = array[j];
+					array[j] = array[j + 1];
+					array[j + 1] = temp;
 				}
 			}
 		}
-		return arr;
+		return array;
 
 	}
 
